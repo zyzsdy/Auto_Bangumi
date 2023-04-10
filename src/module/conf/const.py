@@ -1,25 +1,28 @@
 # -*- encoding: utf-8 -*-
+import os
+
+ROOT_PATH = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 DEFAULT_SETTINGS = {
     "program": {
         "sleep_time": 7200,
         "times": 20,
-        "webui_port": 7892,
+        "webui_port": 37144,
         "data_version": 4.0
     },
     "downloader": {
         "type": "qbittorrent",
-        "host": "127.0.0.1:8080",
+        "host": "127.0.0.1:37145",
         "username": "admin",
         "password": "adminadmin",
-        "path": "/downloads/Bangumi",
+        "path": "D:\\tmp\\tmpdownload",
         "ssl": False
     },
     "rss_parser": {
         "enable": True,
         "type": "mikan",
         "link": "",
-        "enable_tmdb": False,
+        "enable_tmdb": True,
         "filter": ["720", "\\d+-\\d+"],
         "language": "zh"
     },
@@ -39,8 +42,8 @@ DEFAULT_SETTINGS = {
     "proxy": {
         "enable": False,
         "type": "http",
-        "host": "",
-        "port": 1080,
+        "host": "127.0.0.1",
+        "port": 7890,
         "username": "",
         "password": ""
     },

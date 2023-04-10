@@ -1,8 +1,10 @@
+import os
 import logging
 
 from .config import settings
+from .const import ROOT_PATH
 
-LOG_PATH = "data/log.txt"
+LOG_PATH = os.path.join(ROOT_PATH, "data/log.txt")
 
 
 def setup_logger():

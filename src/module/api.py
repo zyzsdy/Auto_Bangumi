@@ -1,3 +1,4 @@
+import os
 import uvicorn
 from uvicorn.config import LOGGING_CONFIG
 from fastapi import FastAPI, Request
@@ -8,6 +9,7 @@ import logging
 
 from .core import APIProcess
 from .conf import settings, DATA_PATH, LOG_PATH
+from .conf.const import ROOT_PATH
 from .utils import json_config
 from .models.api import *
 
@@ -16,9 +18,11 @@ logger = logging.getLogger(__name__)
 app = FastAPI()
 api_func = APIProcess()
 
-app.mount("/assets", StaticFiles(directory="templates/assets"), name="assets")
-templates = Jinja2Templates(directory="templates")
+templates_path = os.path.join(ROOT_PATH, "templates")
+templates_asset_path = os.path.join(templates_path, "assets")
 
+app.mount("/assets", StaticFiles(directory=templates_asset_path), name="assets")
+templates = Jinja2Templates(directory=templates_path)
 
 @app.get("/", response_class=HTMLResponse)
 def index(request: Request):

@@ -3,6 +3,7 @@ import time
 import logging
 
 from module.conf import settings, setup_logger, LOG_PATH, DATA_PATH, VERSION
+from module.conf.const import ROOT_PATH
 from module.utils import json_config
 
 from module.core import DownloadClient
