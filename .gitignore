@@ -179,3 +179,4 @@ test.*
 /src/templates/
 /src/config/
 /src/debuger.py
+/src/tools

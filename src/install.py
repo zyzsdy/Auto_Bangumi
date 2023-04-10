@@ -1,14 +1,17 @@
 import os
+import sys
+
+ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(ROOT_PATH)
+
 import json
+from module.config import DEFAULT_SETTINGS
+
 
 def setup():
     # 在当前目录下建立config、data文件夹
-    root_path = os.path.dirname(os.path.abspath(__file__))
-
-    print("root_path: ", root_path)
-
-    config_path = os.path.join(root_path, "config")
-    data_path = os.path.join(root_path, "data")
+    config_path = os.path.join(ROOT_PATH, "config")
+    data_path = os.path.join(ROOT_PATH, "data")
 
     if not os.path.exists(config_path):
         os.mkdir(config_path)
@@ -37,7 +40,7 @@ def setup():
         print("")
         print("2. 配置保存新番的路径。")
         print("")
-        print("请在此处填写您想要保存新番的路径（请确保路径存在）：")
+        print("请填写保存新番的文件夹路径。（文件夹必须先建立好哦！）")
         setting["downloader"]["path"] = input()
         print("")
         print("3. 配置Mikan的RSS订阅地址。")
@@ -79,5 +82,56 @@ def setup():
 
     print("初始化配置已完成。")
 
+def install_service():
+    # 使用nssm安装服务
+    nssm_path = os.path.abspath(os.path.join(ROOT_PATH, "tools", "nssm.exe"))
+    python_path = os.path.abspath(os.path.join(ROOT_PATH, "tools", "python", "python.exe"))
+
+    # 安装服务
+    os.system(f"{nssm_path} install AutoBangumi {python_path} {ROOT_PATH}\\main.py")
+
+    # 设置服务的启动类型为自动
+    os.system(f"{nssm_path} set AutoBangumi Start SERVICE_AUTO_START")
+
+    # 启动服务
+    os.system(f"{nssm_path} start AutoBangumi")
+
+    print("服务已安装并启动。")
+
+def uninstall_service():
+    # 使用nssm卸载服务
+    nssm_path = os.path.abspath(os.path.join(ROOT_PATH, "tools", "nssm.exe"))
+
+    # 停止服务
+    os.system(f"{nssm_path} stop AutoBangumi")
+
+    # 卸载服务
+    os.system(f"{nssm_path} remove AutoBangumi confirm")
+
+    print("服务已卸载。")
+
+def function_select():
+    # 设置粉色背景，白色文字
+    os.system("color df")
+
+    print("============================")
+    print("请选择要执行的操作：")
+    print("1. 初始化配置并安装服务")
+    print("2. 卸载服务")
+    print("3. 退出")
+    print("请输入序号：")
+    function = input()
+    if function == "1":
+        setup()
+        install_service()
+    elif function == "2":
+        uninstall_service()
+    elif function == "3":
+        exit()
+    else:
+        print("输入错误，请重新输入。")
+        function_select()
+
+
 if __name__ == "__main__":
-    setup()
+    function_select()

@@ -31,3 +31,4 @@ config/bangumi.json/config/bangumi.json
 /README.md
 /setup.py
 dist.zip
+src/tools

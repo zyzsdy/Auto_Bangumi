@@ -4,6 +4,7 @@ import os
 from dataclasses import dataclass
 
 from .const import DEFAULT_SETTINGS, ENV_TO_ATTR, ROOT_PATH
+from ..config import VERSION_SUFFIX, VERSION_PREFIX
 
 class ConfLoad(dict):
     def __getattr__(self, item):
@@ -61,4 +62,4 @@ class Settings:
 CONFIG_PATH = os.path.join(ROOT_PATH, "config/config.json")
 settings = Settings(CONFIG_PATH)
 
-VERSION = "DEV-KoaMod.1"
+VERSION = VERSION_PREFIX + "-" + VERSION_SUFFIX
